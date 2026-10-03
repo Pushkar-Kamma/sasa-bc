@@ -36,6 +36,16 @@ body {
 
 .container { width: min(100% - 2rem, 1200px); margin: 0 auto; }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 h1, h3 { font-family: 'Playfair Display', serif; font-weight: 800; }
 h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 
@@ -57,6 +67,27 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 }
 
 /* ------------------------------
+   DECORATIVE BACKGROUND PATTERN (festive motif, reused across pages)
+   Text content is wrapped in .text-card so the pattern never sits under copy.
+------------------------------ */
+.decor-bg { position: relative; isolation: isolate; }
+.decor-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%238D1B12' stroke-width='2'%3E%3Cpath d='M70 20c-24 0-42 18-42 42 0 18 12 30 24 36-6 12-18 18-18 30 0 18 18 30 36 30 24 0 42-18 42-42 0-18-12-30-24-36 6-12 18-18 18-30 0-18-18-30-36-30z'/%3E%3Ccircle cx='70' cy='70' r='6' fill='%23E6A01A' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  background-repeat: repeat;
+}
+.decor-bg > .container { position: relative; z-index: 1; background-color: inherit; }
+.text-card { background-color: inherit; border-radius: 22px; padding: 0.9rem 1.2rem; }
+
+.text-accent-gold { color: #FFD16A !important; }
+
+/* ------------------------------
    NAVBAR - GLASSMORPHISM
 ------------------------------ */
 .navbar {
@@ -76,18 +107,27 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .brand a.brand-link { display: inline-flex; align-items: center; gap: 0.8rem; text-decoration: none; }
 .brand:hover { transform: translateY(-2px); }
 
-.logo-placeholder {
+.logo-mark {
   width: 53px;
   height: 53px;
   border-radius: 50%;
-  background: rgba(141,27,18,0.08);
-  border: 2px dashed rgba(141,27,18,0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-family: 'Playfair Display', serif;
+  background: var(--sky);
+  border: 2px solid rgba(141,27,18,0.18);
+  object-fit: contain;
+  padding: 2px;
   box-shadow: 0 4px 15px rgba(230, 160, 26, 0.3);
+}
+
+/* ------------------------------
+   REAL PHOTOS (replace dashed placeholders)
+------------------------------ */
+.photo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 10px 26px rgba(61,33,24,0.18);
 }
 
 .brand-name {
@@ -141,20 +181,20 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 
 .nav-actions { display: flex; align-items: center; margin-left: auto; }
 .join-cta {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--orange) 100%);
-  color: #4A2817;
+  background: var(--deep-blue);
+  color: var(--sky);
   padding: 0.6rem 1.2rem;
   border-radius: 30px;
   text-decoration: none;
   font-family: 'DM Sans', sans-serif;
   font-weight: 800;
   letter-spacing: 0.3px;
-  box-shadow: 0 8px 24px rgba(230, 160, 26, 0.3);
+  box-shadow: 0 8px 24px rgba(141, 27, 18, 0.32);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 2px solid rgba(255,255,255,0.15);
   white-space: nowrap;
 }
-.join-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(230, 160, 26, 0.45); }
+.join-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(141, 27, 18, 0.46); }
 
 /* ------------------------------
    HERO
@@ -167,30 +207,51 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .hero-photo-row { display: flex; gap: 1rem; }
 .hero-photo-small { flex: 1; height: 140px; }
 
-.hero-text-column h1 {
+.hero-text-column h1,
+.about-hero h1 {
   font-size: clamp(4.4rem, 8vw, 6.5rem);
   line-height: 0.95;
   font-weight: 800;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--white), var(--gold));
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold) 35%, var(--deep-blue) 100%);
+  background-size: 400% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradientBG 15s ease infinite;
+}
+.about-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); margin-bottom: 0.7rem; }
+
+/* "SASA" briefly cycles through a few fonts before settling on Playfair Display */
+.font-flicker { animation: fontCycle 1.6s steps(1, end) 1; }
+@keyframes fontCycle {
+  0%   { font-family: 'Raleway', sans-serif; }
+  25%  { font-family: 'Poppins', sans-serif; }
+  50%  { font-family: 'DM Sans', sans-serif; }
+  75%  { font-family: 'Raleway', sans-serif; }
+  100% { font-family: 'Playfair Display', serif; }
 }
 .hero-text-column { text-align: center; }
 .hero-text-column p { font-size: 1.4rem; font-weight: 600; max-width: 480px; margin: 0 auto 2rem; color: rgba(255,255,255,0.95); }
 
 .pulse-border {
   display: inline-block;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--orange) 100%);
-  color: var(--dark-navy);
+  background: var(--deep-blue);
+  color: var(--sky);
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   padding: 0.9rem 2.2rem;
   border-radius: 40px;
   text-decoration: none;
-  box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.6);
-  animation: pulse 2.2s infinite;
+  box-shadow: 0 0 0 0 rgba(141, 27, 18, 0.55);
+  animation: pulseRed 2.2s infinite;
+  transition: transform 0.2s ease;
+}
+.pulse-border:hover { transform: translateY(-2px); }
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 0 0 rgba(141, 27, 18, 0.55); }
+  70% { box-shadow: 0 0 0 20px rgba(141, 27, 18, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(141, 27, 18, 0); }
 }
 @keyframes pulse {
   0% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.5); }
@@ -198,18 +259,17 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   100% { box-shadow: 0 0 0 0 rgba(255, 209, 102, 0); }
 }
 
-/* Hero sits on an animated multi-color gradient, so give its button a fixed,
-   high-contrast look that stays visible no matter what color is behind it. */
+/* The hero's Join Us button keeps the original gold/saffron look the user preferred. */
 .hero-text-column .pulse-border {
-  background: var(--white);
-  color: var(--deep-blue);
-  border: 2px solid var(--gold);
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--orange) 100%);
+  color: var(--dark-navy);
+  box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.6);
+  animation: pulse 2.2s infinite;
+  border: 2px solid rgba(255,255,255,0.25);
 }
 .hero-text-column .pulse-border:hover {
-  background: var(--gold);
-  color: var(--white);
   transform: translateY(-2px);
+  box-shadow: 0 0 0 14px rgba(255, 209, 102, 0.12);
 }
 
 .wave-animation {
@@ -223,7 +283,8 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
    STATS
 ------------------------------ */
 .social-proof { padding: 3rem 0; text-align: center; background: var(--sky); color: var(--gray-text); }
-.social-proof h2 { margin-bottom: 2rem; font-size: 2rem; }
+.stat-heading-card { margin: 0 auto 2rem; }
+.social-proof h2 { font-size: 2rem; }
 .stats { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
 .stat-card {
   background: var(--white);
@@ -263,7 +324,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 /* ------------------------------
    GALLERY
 ------------------------------ */
-.gallery { padding: 4rem 0; text-align: center; overflow: hidden; background: var(--warm-cream); color: var(--deep-blue); }
+.gallery { padding: 4rem 0; text-align: center; overflow: hidden; background: var(--sky); color: var(--deep-blue); }
 .gallery h2 { margin-bottom: 2rem; font-size: 2rem; }
 .gallery-track {
   display: flex;
@@ -309,7 +370,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 /* ------------------------------
    JOIN / FOOTER
 ------------------------------ */
-.join { padding: 5rem 0; text-align: center; background: var(--sky); color: var(--deep-blue); }
+.join { padding: 5rem 0; text-align: center; background: var(--warm-cream); color: var(--deep-blue); }
 .join h2 { font-size: 2.2rem; margin-bottom: 1rem; }
 .join p { max-width: 560px; margin: 0 auto 2rem; color: var(--gray-text); }
 
@@ -327,7 +388,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .subpage-hero {
   padding: 5.5rem 0 6rem;
   text-align: center;
-  color: var(--white);
+  color: var(--warm-cream);
   background: linear-gradient(125deg, #68150F, #A92216 58%, #C6531A);
 }
 .subpage-hero .eyebrow, .events-join .eyebrow {
@@ -338,30 +399,23 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   font-family: 'DM Sans', sans-serif;
   font-weight: 600;
 }
-.subpage-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 800; margin: 0.4rem 0 0.8rem; }
-.subpage-hero p:not(.eyebrow) { max-width: 720px; margin: 0 auto; color: rgba(255,253,248,0.9); font-size: 1.1rem; }
+.subpage-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 800; margin: 0.4rem 0 0.8rem; color: var(--warm-cream); }
+.subpage-hero p:not(.eyebrow) { max-width: 720px; margin: 0 auto; color: rgba(233, 221, 199, 0.92); font-size: 1.1rem; }
 .leadership-section { padding: 4.5rem 0; background: var(--sky); color: var(--gray-text); }
-.leadership-alumni { background: var(--warm-cream); }
 .section-intro { max-width: 700px; margin: 0 auto 3rem; text-align: center; }
 .section-intro .eyebrow { color: var(--orange); font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
 .section-intro h2 { color: var(--deep-blue); font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0.45rem 0 0.6rem; }
 .section-intro p { color: var(--gray-text); }
-.leadership-layout { display: grid; grid-template-columns: minmax(190px, 0.75fr) 1px minmax(0, 2fr); gap: 2.5rem; align-items: stretch; }
-.leadership-heading { color: var(--deep-blue); font: 600 1.15rem 'DM Sans', sans-serif; margin-bottom: 1.5rem; text-align: center; }
-.leadership-divider { width: 1px; background: rgba(141,27,18,0.2); }
-.leader-grid { display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 2rem 1.4rem; }
-.leader-grid-community { grid-template-columns: repeat(3, minmax(150px, 1fr)); max-width: 850px; margin: 0 auto; }
-.leader-card { text-align: center; color: var(--gray-text); }
+.leader-grid { display: grid; grid-template-columns: repeat(3, minmax(170px, 1fr)); gap: 2rem 1.4rem; }
+.leader-card { text-align: center; color: var(--gray-text); background: var(--white); border-radius: 18px; padding: 1.6rem 1rem 1.8rem; box-shadow: 0 10px 26px rgba(61,33,24,0.08); }
 .leader-name { color: var(--deep-blue); font: 600 1rem 'DM Sans', sans-serif; min-height: 1.6rem; }
 .leader-avatar { width: 142px; height: 142px; margin: 0.75rem auto 0.65rem; border-radius: 50%; color: var(--deep-blue); border-color: rgba(141,27,18,0.38); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); }
-.leader-card-featured .leader-avatar { width: 176px; height: 176px; }
 .leader-socials { display: flex; justify-content: center; gap: 0.55rem; margin: 0.4rem 0 0.6rem; }
 .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: var(--white); transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 10px rgba(61,33,24,0.18); }
 .social-icon:hover { transform: translateY(-2px) scale(1.06); }
-.social-instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
-.social-linkedin { background: #0A66C2; }
+.social-instagram { background: radial-gradient(circle at 30% 110%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); filter: saturate(0.78) hue-rotate(-12deg); }
+.social-linkedin { background: #0A66C2; filter: hue-rotate(-14deg) saturate(0.82); }
 .leader-role { color: var(--deep-blue); font: 600 0.92rem 'DM Sans', sans-serif; }
-.leader-term { color: #806C5E; font-size: 0.78rem; }
 
 .events-roadmap {
   position: relative;
@@ -404,9 +458,8 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .event-date { color: #866D55; font-size: 0.78rem; font-weight: 500; }
 .event-card h3 { margin: 0.35rem 0 0.55rem; color: var(--deep-blue); font: 700 1.45rem 'Playfair Display', serif; }
 .event-card-content p { color: var(--gray-text); font-size: 0.92rem; }
-.event-tag { display: inline-block; margin-top: 0.9rem; padding: 0.28rem 0.7rem; border-radius: 20px; background: #F7E8C7; color: #71351C; font: 600 0.72rem 'DM Sans', sans-serif; }
-.events-join { padding: 4rem 1rem; background: var(--deep-blue); color: var(--white); text-align: center; }
-.events-join h2 { max-width: 650px; margin: 0.5rem auto 1.5rem; font-size: clamp(1.8rem, 4vw, 2.7rem); }
+.events-join { padding: 4rem 1rem; background: var(--deep-blue); color: var(--warm-cream); text-align: center; }
+.events-join h2 { max-width: 650px; margin: 0.5rem auto 1.5rem; font-size: clamp(2.3rem, 5.5vw, 3.4rem); }
 .path-kite { filter: drop-shadow(0 3px 4px rgba(61,33,24,0.22)); }
 .path-kite-lead { color: #E63A25; }
 .path-kite-small:nth-child(2) { color: #F28C16; }
@@ -427,8 +480,6 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 ------------------------------ */
 .about-hero { text-align: center; }
 .about-hero .hero-content { padding-top: 1.5rem; }
-.about-hero .eyebrow { color: #FFD16A; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-.about-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 800; margin-bottom: 0.7rem; }
 .about-hero p { max-width: 760px; margin: 0 auto; color: rgba(255,253,248,0.9); font-size: 1.1rem; }
 .about-mission { background: var(--sky); }
 .about-copy h2, .about-community-copy h2 { color: var(--deep-blue); }
@@ -437,7 +488,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .about-photo { min-height: 350px; color: var(--deep-blue); border-color: rgba(141,27,18,0.38); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); }
 .about-values { padding: 4.5rem 0; background: var(--warm-cream); color: var(--gray-text); }
 .about-value-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; }
-.about-value-card { padding: 1.8rem; border-radius: 16px; background: var(--white); border: 1px solid rgba(141,27,18,0.12); box-shadow: 0 12px 28px rgba(61,33,24,0.07); }
+.about-value-card { padding: 1.8rem; border-radius: 16px; background: var(--sky); border: 1px solid rgba(141,27,18,0.12); box-shadow: 0 12px 28px rgba(61,33,24,0.07); }
 .about-value-card h3 { color: var(--deep-blue); font: 700 1.25rem 'Playfair Display', serif; margin-bottom: 0.6rem; }
 .about-community { background: var(--sky); }
 
@@ -471,10 +522,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   .about-hero .hero-content { padding-top: 0; }
   .about-photo { min-height: 240px; }
   .about-value-grid { grid-template-columns: 1fr; }
-  .leadership-layout { grid-template-columns: 1fr; gap: 2rem; }
-  .leadership-divider { height: 1px; width: 100%; }
   .leader-grid { grid-template-columns: repeat(2, minmax(125px, 1fr)); }
-  .leader-grid-community { grid-template-columns: repeat(2, minmax(125px, 1fr)); }
   .timeline-art { left: 0; }
   .timeline-path-base { stroke-width: 3; }
   .timeline-path-progress { stroke-width: 4; }
@@ -488,13 +536,13 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 @media (max-width: 480px) {
   .nav-main { gap: 0.6rem; }
   .brand a.brand-link { gap: 0.5rem; }
-  .logo-placeholder { width: 38px; height: 38px; font-size: 9px; }
+  .logo-mark { width: 38px; height: 38px; }
   .brand-name { font-size: 28px; }
   .join-cta { padding: 0.5rem 0.9rem; font-size: 0.82rem; }
 }
 
 @media (max-width: 420px) {
-  .leader-grid, .leader-grid-community { grid-template-columns: 1fr 1fr; gap: 1.5rem 0.75rem; }
+  .leader-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem 0.75rem; }
   .leader-avatar { width: 124px; height: 124px; }
   .event-photo { height: 150px; }
   .event-card-content { padding: 1rem; }
@@ -503,4 +551,6 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 @media (prefers-reduced-motion: reduce) {
   .path-kite { display: none; }
   .events-roadmap { animation: none; background-position: 50% 50%; }
+  .font-flicker { animation: none; font-family: 'Playfair Display', serif; }
+  .hero-text-column h1, .about-hero h1 { animation: none; background-position: 0% 50%; }
 }
