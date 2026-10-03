@@ -36,7 +36,7 @@ body {
 
 .container { width: min(100% - 2rem, 1200px); margin: 0 auto; }
 
-h1, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+h1, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 700; }
 h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 
 /* ------------------------------
@@ -191,7 +191,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .hero-text-column h1 {
   font-size: clamp(4.4rem, 8vw, 6.5rem);
   line-height: 0.95;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 1rem;
   background: linear-gradient(135deg, var(--white), var(--gold));
   -webkit-background-clip: text;
@@ -344,7 +344,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   font-family: 'DM Sans', sans-serif;
   font-weight: 600;
 }
-.subpage-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 600; margin: 0.4rem 0 0.8rem; }
+.subpage-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 700; margin: 0.4rem 0 0.8rem; }
 .subpage-hero p:not(.eyebrow) { max-width: 720px; margin: 0 auto; color: rgba(255,253,248,0.9); font-size: 1.1rem; }
 .leadership-section { padding: 4.5rem 0; background: var(--sky); color: var(--gray-text); }
 .leadership-alumni { background: var(--warm-cream); }
@@ -406,7 +406,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .about-hero { text-align: center; }
 .about-hero .hero-content { padding-top: 1.5rem; }
 .about-hero .eyebrow { color: #FFD16A; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
-.about-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 600; margin-bottom: 0.7rem; }
+.about-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); line-height: 1; font-weight: 700; margin-bottom: 0.7rem; }
 .about-hero p { max-width: 760px; margin: 0 auto; color: rgba(255,253,248,0.9); font-size: 1.1rem; }
 .about-mission { background: var(--sky); }
 .about-copy h2, .about-community-copy h2 { color: var(--deep-blue); }
