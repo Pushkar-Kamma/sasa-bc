@@ -18,18 +18,6 @@ if (menuToggle && navLinks) {
   });
 }
 
-// Mobile dropdown toggle (About Us)
-document.querySelectorAll('.dropdown-container').forEach((item) => {
-  const trigger = item.querySelector('.nav-dropdown-trigger');
-  if (!trigger) return;
-  trigger.addEventListener('click', (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      item.classList.toggle('active');
-    }
-  });
-});
-
 // Animated stat counters
 const counters = document.querySelectorAll('.counter');
 const animateCounter = (el) => {
@@ -85,13 +73,20 @@ if (timeline && timelineArt && timelinePath && timelineProgressPath && pathKites
     const mobile = window.matchMedia('(max-width: 768px)').matches;
     const center = mobile ? Math.min(19, width / 2) : width / 2;
     const bend = mobile ? Math.min(9, width * 0.08) : Math.min(92, width * 0.1);
+    // Inset the curve's start/end so the kite graphics (which extend above
+    // and below their anchor point) never poke into the heading text above
+    // or the CTA text below the timeline.
+    const inset = Math.min(36, height * 0.08);
+    const topY = inset;
+    const bottomY = height - inset;
+    const span = bottomY - topY;
     const d = [
-      `M ${center} 0`,
-      `C ${center + bend} ${height * 0.08}, ${center + bend} ${height * 0.13}, ${center} ${height * 0.2}`,
-      `C ${center - bend} ${height * 0.27}, ${center - bend} ${height * 0.33}, ${center} ${height * 0.4}`,
-      `C ${center + bend} ${height * 0.47}, ${center + bend} ${height * 0.53}, ${center} ${height * 0.6}`,
-      `C ${center - bend} ${height * 0.67}, ${center - bend} ${height * 0.73}, ${center} ${height * 0.8}`,
-      `C ${center + bend} ${height * 0.87}, ${center + bend} ${height * 0.93}, ${center} ${height}`
+      `M ${center} ${topY}`,
+      `C ${center + bend} ${topY + span * 0.08}, ${center + bend} ${topY + span * 0.13}, ${center} ${topY + span * 0.2}`,
+      `C ${center - bend} ${topY + span * 0.27}, ${center - bend} ${topY + span * 0.33}, ${center} ${topY + span * 0.4}`,
+      `C ${center + bend} ${topY + span * 0.47}, ${center + bend} ${topY + span * 0.53}, ${center} ${topY + span * 0.6}`,
+      `C ${center - bend} ${topY + span * 0.67}, ${center - bend} ${topY + span * 0.73}, ${center} ${topY + span * 0.8}`,
+      `C ${center + bend} ${topY + span * 0.87}, ${center + bend} ${topY + span * 0.93}, ${center} ${bottomY}`
     ].join(' ');
 
     timelineArt.setAttribute('viewBox', `0 0 ${width} ${height}`);
@@ -100,7 +95,10 @@ if (timeline && timelineArt && timelinePath && timelineProgressPath && pathKites
 
     const pathLength = timelinePath.getTotalLength();
     const timelineTop = timeline.getBoundingClientRect().top + window.scrollY;
-    const pathStart = timelineTop - window.innerHeight * 0.18;
+    // Trigger movement once the timeline reaches roughly the center of the
+    // viewport (instead of near its top), so the kites are already in
+    // motion by the time they are clearly visible on screen.
+    const pathStart = timelineTop - window.innerHeight * 0.5;
     const pathProgress = Math.max(0, Math.min(1,
       (window.scrollY - pathStart) /
       Math.max(timeline.offsetHeight - window.innerHeight * 0.64, 1)
