@@ -64,34 +64,86 @@ if (track) {
   track.innerHTML += track.innerHTML;
 }
 
-// Let the Sankranti kite drift down and back up with page scroll.
-const scrollKite = document.getElementById('scroll-kite');
-if (scrollKite && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  let previousScrollY = window.scrollY;
-  let scrollDirection = 1;
+// Move the Sankranti kite flotilla along the events timeline as it scrolls.
+const timeline = document.querySelector('.events-timeline');
+const timelineArt = document.getElementById('timeline-art');
+const timelinePath = document.getElementById('timeline-path');
+const timelineProgressPath = document.getElementById('timeline-path-progress');
+const pathKites = Array.from(document.querySelectorAll('.path-kite'));
+
+if (timeline && timelineArt && timelinePath && timelineProgressPath && pathKites.length) {
   let animationFrame = 0;
 
-  const moveKite = () => {
-    const scrollRange = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-    const progress = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
-    const horizontalWave = (Math.sin(progress * Math.PI * 5 - Math.PI / 2) + 1) / 2;
-    const x = 18 + horizontalWave * Math.max(window.innerWidth - 120, 0);
-    const y = window.innerHeight * (0.12 + progress * 0.68);
+  const renderTimeline = () => {
+    const width = timeline.clientWidth;
+    const height = timeline.clientHeight;
+    if (!width || !height) {
+      animationFrame = 0;
+      return;
+    }
 
-    scrollKite.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${scrollDirection * 7}deg)`;
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const center = mobile ? Math.min(19, width / 2) : width / 2;
+    const bend = mobile ? Math.min(9, width * 0.08) : Math.min(92, width * 0.1);
+    const d = [
+      `M ${center} 0`,
+      `C ${center + bend} ${height * 0.08}, ${center + bend} ${height * 0.13}, ${center} ${height * 0.2}`,
+      `C ${center - bend} ${height * 0.27}, ${center - bend} ${height * 0.33}, ${center} ${height * 0.4}`,
+      `C ${center + bend} ${height * 0.47}, ${center + bend} ${height * 0.53}, ${center} ${height * 0.6}`,
+      `C ${center - bend} ${height * 0.67}, ${center - bend} ${height * 0.73}, ${center} ${height * 0.8}`,
+      `C ${center + bend} ${height * 0.87}, ${center + bend} ${height * 0.93}, ${center} ${height}`
+    ].join(' ');
+
+    timelineArt.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    timelinePath.setAttribute('d', d);
+    timelineProgressPath.setAttribute('d', d);
+
+    const pathLength = timelinePath.getTotalLength();
+    const timelineTop = timeline.getBoundingClientRect().top + window.scrollY;
+    const pathStart = timelineTop - window.innerHeight * 0.18;
+    const pathProgress = Math.max(0, Math.min(1,
+      (window.scrollY - pathStart) /
+      Math.max(timeline.offsetHeight - window.innerHeight * 0.64, 1)
+    ));
+    timelineProgressPath.style.strokeDasharray = `${pathLength}`;
+    timelineProgressPath.style.strokeDashoffset = `${pathLength * (1 - pathProgress)}`;
+
+    pathKites.forEach((kite, index) => {
+      const easing = Number(kite.dataset.easing) || 1;
+      const point = timelinePath.getPointAtLength(pathLength * pathProgress ** easing);
+      const ahead = timelinePath.getPointAtLength(Math.min(pathLength, pathLength * pathProgress ** easing + 1));
+      const behind = timelinePath.getPointAtLength(Math.max(0, pathLength * pathProgress ** easing - 1));
+      const angle = Math.atan2(ahead.y - behind.y, ahead.x - behind.x) * 180 / Math.PI + 90;
+      const scale = index === 0 ? 1 : 0.82;
+      kite.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle}) scale(${scale})`);
+    });
+
+    const markers = timeline.querySelectorAll('.timeline-marker');
+    markers.forEach((marker) => {
+      const event = marker.closest('.timeline-event');
+      if (!event) return;
+      const eventTop = event.offsetTop + Math.min(36, event.offsetHeight * 0.15);
+      let low = 0;
+      let high = pathLength;
+      for (let step = 0; step < 18; step += 1) {
+        const middle = (low + high) / 2;
+        if (timelinePath.getPointAtLength(middle).y < eventTop) low = middle;
+        else high = middle;
+      }
+      const point = timelinePath.getPointAtLength((low + high) / 2);
+      marker.style.left = `${point.x}px`;
+      marker.style.top = `${point.y - event.offsetTop}px`;
+    });
+
     animationFrame = 0;
   };
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY !== previousScrollY) {
-      scrollDirection = window.scrollY > previousScrollY ? 1 : -1;
-      previousScrollY = window.scrollY;
-    }
-    if (!animationFrame) animationFrame = window.requestAnimationFrame(moveKite);
-  }, { passive: true });
+  const requestTimelineRender = () => {
+    if (!animationFrame) animationFrame = window.requestAnimationFrame(renderTimeline);
+  };
 
-  window.addEventListener('resize', () => {
-    if (!animationFrame) animationFrame = window.requestAnimationFrame(moveKite);
-  });
-  moveKite();
+  window.addEventListener('scroll', requestTimelineRender, { passive: true });
+  window.addEventListener('resize', requestTimelineRender);
+  window.addEventListener('load', requestTimelineRender);
+  requestTimelineRender();
 }

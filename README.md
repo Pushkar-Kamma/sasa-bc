@@ -2,7 +2,7 @@
 
 Responsive static website mockup for Bellevue College's South Asian Student Association.
 
-The home page, dedicated leadership page, and event timeline are `index.html`, `team.html`, and `events.html`. Team portraits and event photography are placeholders until SASA provides images.
+The home, About, leadership, and event pages are `index.html`, `about.html`, `team.html`, and `events.html`. Team portraits and event photography are placeholders until SASA provides images. The Events page has a curved, scroll-following kite path.
 
 ## Deploy
 

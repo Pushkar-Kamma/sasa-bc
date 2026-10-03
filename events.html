@@ -25,7 +25,8 @@
         <li class="dropdown-container">
           <span class="nav-dropdown-trigger">About Us</span>
           <ul class="dropdown">
-            <li><a href="index.html#mission">Mission</a></li>
+            <li><a href="about.html">About SASA</a></li>
+            <li><a href="about.html#mission">Our Mission</a></li>
             <li><a href="index.html#impact">Impact</a></li>
           </ul>
         </li>
@@ -55,7 +56,51 @@
       </div>
 
       <div class="events-timeline">
-        <div class="timeline-spine" aria-hidden="true"></div>
+        <svg class="timeline-art" id="timeline-art" aria-hidden="true" viewBox="0 0 100 1000" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="event-path-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#E6A01A"/>
+              <stop offset="52%" stop-color="#F28C16"/>
+              <stop offset="100%" stop-color="#8D1B12"/>
+            </linearGradient>
+          </defs>
+          <path class="timeline-path-base" id="timeline-path" d="M50 0 C72 100 72 125 50 200 C28 275 28 325 50 400 C72 475 72 525 50 600 C28 675 28 725 50 800 C72 875 72 925 50 1000"/>
+          <path class="timeline-path-progress" id="timeline-path-progress" d="M50 0 C72 100 72 125 50 200 C28 275 28 325 50 400 C72 475 72 525 50 600 C28 675 28 725 50 800 C72 875 72 925 50 1000"/>
+          <g class="kite-flotilla">
+            <g class="path-kite path-kite-lead" data-easing="0.78">
+              <path class="kite-tail-line" d="M0 18 C-8 32 9 39 0 52 C-8 63 8 70 0 80"/>
+              <path class="kite-bow" d="M-5 34 L0 38 L5 34 M-5 57 L0 61 L5 57 M-5 75 L0 79 L5 75"/>
+              <path class="kite-shape" d="M0 -20 L16 0 L0 20 L-16 0 Z"/>
+              <path class="kite-cross" d="M0 -20 V20 M-16 0 H16"/>
+              <path class="kite-diamond" d="M0 -14 L10 0 L0 14 L-10 0 Z"/>
+              <circle class="kite-center" cx="0" cy="0" r="2.5"/>
+            </g>
+            <g class="path-kite path-kite-small" data-easing="0.92">
+              <path class="kite-tail-line" d="M0 13 C-5 23 6 28 0 37 C-5 45 5 50 0 56"/>
+              <path class="kite-bow" d="M-4 25 L0 28 L4 25 M-4 42 L0 45 L4 42"/>
+              <path class="kite-shape" d="M0 -14 L11 0 L0 14 L-11 0 Z"/>
+              <path class="kite-cross" d="M0 -14 V14 M-11 0 H11"/>
+              <path class="kite-diamond" d="M0 -9 L7 0 L0 9 L-7 0 Z"/>
+              <circle class="kite-center" cx="0" cy="0" r="1.8"/>
+            </g>
+            <g class="path-kite path-kite-small" data-easing="1.08">
+              <path class="kite-tail-line" d="M0 13 C-5 23 6 28 0 37 C-5 45 5 50 0 56"/>
+              <path class="kite-bow" d="M-4 25 L0 28 L4 25 M-4 42 L0 45 L4 42"/>
+              <path class="kite-shape" d="M0 -14 L11 0 L0 14 L-11 0 Z"/>
+              <path class="kite-cross" d="M0 -14 V14 M-11 0 H11"/>
+              <path class="kite-diamond" d="M0 -9 L7 0 L0 9 L-7 0 Z"/>
+              <circle class="kite-center" cx="0" cy="0" r="1.8"/>
+            </g>
+            <g class="path-kite path-kite-small" data-easing="1.24">
+              <path class="kite-tail-line" d="M0 13 C-5 23 6 28 0 37 C-5 45 5 50 0 56"/>
+              <path class="kite-bow" d="M-4 25 L0 28 L4 25 M-4 42 L0 45 L4 42"/>
+              <path class="kite-shape" d="M0 -14 L11 0 L0 14 L-11 0 Z"/>
+              <path class="kite-cross" d="M0 -14 V14 M-11 0 H11"/>
+              <path class="kite-diamond" d="M0 -9 L7 0 L0 9 L-7 0 Z"/>
+              <circle class="kite-center" cx="0" cy="0" r="1.8"/>
+            </g>
+          </g>
+        </svg>
         <article class="timeline-event">
           <div class="timeline-marker" aria-hidden="true">01</div>
           <div class="event-card">
@@ -129,21 +174,10 @@
   </section>
 </main>
 
-<div class="scroll-kite" id="scroll-kite" aria-hidden="true">
-  <svg viewBox="0 0 120 170" role="presentation">
-    <path class="kite-tail-line" d="M60 92 C47 111 76 118 59 135 C45 150 72 155 59 169"/>
-    <path class="kite-shape" d="M60 5 L108 48 L60 91 L12 48 Z"/>
-    <path class="kite-cross" d="M60 5 V91 M12 48 H108"/>
-    <path class="kite-diamond" d="M60 17 L95 48 L60 80 L25 48 Z"/>
-    <path class="kite-bow" d="M48 105 L60 112 L72 105 M48 130 L60 137 L72 130 M48 154 L60 161 L72 154"/>
-    <circle class="kite-center" cx="60" cy="48" r="5"/>
-  </svg>
-</div>
-
 <footer class="footer">
   <div class="container footer-page">
     <p>&copy; 2026 SASA — South Asian Student Association, Bellevue College</p>
-    <div class="footer-links"><a href="index.html">Home</a><a href="team.html">Team</a><a href="index.html#join">Join Us</a></div>
+    <div class="footer-links"><a href="index.html">Home</a><a href="about.html">About Us</a><a href="team.html">Team</a><a href="index.html#join">Join Us</a></div>
   </div>
 </footer>
 <script src="script.js"></script>
