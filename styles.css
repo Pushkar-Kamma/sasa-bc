@@ -518,6 +518,10 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .timeline-motif:nth-child(3) { animation-delay: 2.8s; }
 .timeline-motif:nth-child(4) { animation-delay: 4.2s; }
 .timeline-motif:nth-child(5) { animation-delay: 5.6s; }
+.timeline-motif:nth-child(6) { animation-delay: 0.7s; }
+.timeline-motif:nth-child(7) { animation-delay: 2.1s; }
+.timeline-motif:nth-child(8) { animation-delay: 3.5s; }
+.timeline-motif:nth-child(9) { animation-delay: 4.9s; }
 @keyframes motifGlow {
   0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
   50% { opacity: 0.75; transform: scale(1.1) rotate(8deg); }
@@ -535,7 +539,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .timeline-event:nth-of-type(even) .event-card { grid-column: 2; width: 90%; justify-self: start; }
 .timeline-marker { position: absolute; z-index: 3; left: 50%; top: 1.4rem; display: grid; place-items: center; width: 42px; height: 42px; transform: translate(-50%, -50%); border: 4px solid var(--sky); border-radius: 50%; background: var(--deep-blue); color: var(--white); font: 600 0.7rem 'DM Sans', sans-serif; box-shadow: 0 0 0 2px var(--gold); }
 .event-card { overflow: hidden; border-radius: 16px; background: var(--white); border: 1px solid rgba(141,27,18,0.13); box-shadow: 0 12px 30px rgba(61,33,24,0.09); }
-.event-photo { height: 190px; margin: 0; border: 0; border-radius: 0; color: var(--deep-blue); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); }
+.event-photo { display: block; width: 100%; height: 190px; margin: 0; border: 0; border-radius: 0; object-fit: cover; object-position: center; box-shadow: none; color: var(--deep-blue); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); }
 .event-card-content { padding: 1.25rem 1.4rem 1.4rem; }
 .event-date { color: #866D55; font-size: 0.78rem; font-weight: 500; }
 .event-card h3 { margin: 0.35rem 0 0.55rem; color: var(--deep-blue); font: 700 1.45rem 'Playfair Display', serif; }
