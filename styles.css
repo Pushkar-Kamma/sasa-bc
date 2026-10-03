@@ -85,7 +85,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   background-repeat: repeat;
 }
 .decor-bg > .container { position: relative; z-index: 1; background-color: inherit; }
-.text-card { background-color: inherit; border-radius: 22px; padding: 0.9rem 1.2rem; }
+.text-card { background-color: inherit; border-radius: 22px; padding: 2rem; }
 
 .text-accent-gold { color: #FFD16A !important; }
 
@@ -220,13 +220,23 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 }
 .about-hero h1 { font-size: clamp(3.4rem, 7vw, 5.6rem); margin-bottom: 0.7rem; }
 
-/* "SASA" briefly cycles through a few fonts before settling on Playfair Display */
-.font-flicker { animation: fontCycle 1.6s steps(1, end) 1; }
+/* "SASA" rapidly cycles through ~15 fonts before settling on Playfair Display */
+.font-flicker { animation: fontCycle 3s steps(1, end) 1; }
 @keyframes fontCycle {
   0%   { font-family: 'Raleway', sans-serif; }
-  25%  { font-family: 'Poppins', sans-serif; }
-  50%  { font-family: 'DM Sans', sans-serif; }
-  75%  { font-family: 'Raleway', sans-serif; }
+  7%   { font-family: 'Poppins', sans-serif; }
+  14%  { font-family: 'DM Sans', sans-serif; }
+  21%  { font-family: Georgia, serif; }
+  29%  { font-family: 'Comic Sans MS', cursive; }
+  36%  { font-family: 'Courier New', monospace; }
+  43%  { font-family: Impact, sans-serif; }
+  50%  { font-family: 'Times New Roman', serif; }
+  57%  { font-family: Verdana, sans-serif; }
+  64%  { font-family: 'Trebuchet MS', sans-serif; }
+  71%  { font-family: Tahoma, sans-serif; }
+  79%  { font-family: 'Brush Script MT', cursive; }
+  86%  { font-family: Arial, sans-serif; }
+  93%  { font-family: 'Raleway', sans-serif; }
   100% { font-family: 'Playfair Display', serif; }
 }
 .hero-text-column { text-align: center; }
@@ -283,6 +293,42 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   bottom: -2px; left: 0; width: 100%; height: 80px;
   background: var(--sky);
   clip-path: polygon(0 60%, 10% 50%, 25% 65%, 40% 45%, 55% 60%, 70% 40%, 85% 58%, 100% 48%, 100% 100%, 0% 100%);
+}
+
+/* Small kites drifting upward along the outer edges of every hero section */
+.hero-kites {
+  position: absolute;
+  top: 0;
+  bottom: 60px;
+  width: 140px;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-kites-left { left: clamp(0.5rem, 3vw, 2.5rem); }
+.hero-kites-right { right: clamp(0.5rem, 3vw, 2.5rem); }
+.hero-kite {
+  position: absolute;
+  bottom: -60px;
+  width: 38px;
+  height: 38px;
+  opacity: 0;
+  filter: drop-shadow(0 3px 4px rgba(61,33,24,0.22));
+  animation: floatKiteUp 11s ease-in-out infinite;
+}
+.hero-kite .kite-shape { fill: currentColor; stroke: #8D1B12; stroke-width: 1.8; stroke-linejoin: round; }
+.hero-kite .kite-cross { fill: none; stroke: #FFD16A; stroke-width: 1.4; stroke-linejoin: round; }
+.hero-kite .kite-tail-line { fill: none; stroke: #8D1B12; stroke-width: 1.8; stroke-linecap: round; }
+.hero-kite .kite-bow { fill: none; stroke: #E6A01A; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.hero-kites-left .hero-kite-1 { left: 0; color: #E63A25; width: 44px; height: 44px; animation-duration: 12s; animation-delay: 0s; }
+.hero-kites-left .hero-kite-2 { left: 56px; color: #E6A01A; width: 30px; height: 30px; animation-duration: 9.5s; animation-delay: 3.5s; }
+.hero-kites-right .hero-kite-1 { right: 0; color: #D95135; width: 40px; height: 40px; animation-duration: 10.5s; animation-delay: 1.8s; }
+.hero-kites-right .hero-kite-2 { right: 54px; color: #F28C16; width: 28px; height: 28px; animation-duration: 13s; animation-delay: 5s; }
+@keyframes floatKiteUp {
+  0%   { transform: translate(0, 0) rotate(-8deg); opacity: 0; }
+  12%  { opacity: 0.8; }
+  50%  { transform: translate(16px, -150%) rotate(7deg); opacity: 0.8; }
+  88%  { opacity: 0; }
+  100% { transform: translate(-10px, -320%) rotate(-6deg); opacity: 0; }
 }
 
 /* ------------------------------
@@ -391,7 +437,9 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
    TEAM AND EVENTS PAGES
 ------------------------------ */
 .subpage-hero {
-  padding: 5.5rem 0 6rem;
+  position: relative;
+  overflow: hidden;
+  padding: 6.5rem 0 7rem;
   text-align: center;
   color: var(--warm-cream);
   background: linear-gradient(-45deg, var(--deep-blue), var(--aqua), var(--deep-blue), var(--dark-navy));
@@ -414,7 +462,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .section-intro h2 { color: var(--deep-blue); font-size: clamp(1.8rem, 4vw, 2.6rem); margin: 0.45rem 0 0.6rem; }
 .section-intro p { color: var(--gray-text); }
 .leader-grid { display: grid; grid-template-columns: repeat(3, minmax(170px, 1fr)); gap: 2rem 1.4rem; }
-.leader-card { text-align: center; color: var(--gray-text); background: var(--white); border-radius: 18px; padding: 1.6rem 1rem 1.8rem; box-shadow: 0 10px 26px rgba(61,33,24,0.08); }
+.leader-card { text-align: center; color: var(--gray-text); background: transparent; border-radius: 18px; padding: 1rem 0.5rem; box-shadow: none; }
 .leader-name { color: var(--deep-blue); font: 600 1rem 'DM Sans', sans-serif; min-height: 1.6rem; }
 .leader-avatar { width: 142px; height: 142px; margin: 0.75rem auto 0.65rem; border-radius: 50%; color: var(--deep-blue); border-color: rgba(141,27,18,0.38); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); }
 .leader-socials { display: flex; justify-content: center; gap: 0.55rem; margin: 0.4rem 0 0.6rem; }
@@ -449,6 +497,33 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+/* Traditional medallions filling the quiet gutters beside the events path */
+.timeline-decor {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  pointer-events: none;
+  z-index: 0;
+}
+.timeline-decor-left { left: 0; }
+.timeline-decor-right { right: 0; }
+.timeline-motif { width: 60px; height: 60px; opacity: 0.55; filter: drop-shadow(0 3px 7px rgba(141,27,18,0.25)); animation: motifGlow 7s ease-in-out infinite; }
+.timeline-motif:nth-child(2) { animation-delay: 1.4s; }
+.timeline-motif:nth-child(3) { animation-delay: 2.8s; }
+.timeline-motif:nth-child(4) { animation-delay: 4.2s; }
+.timeline-motif:nth-child(5) { animation-delay: 5.6s; }
+@keyframes motifGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+  50% { opacity: 0.75; transform: scale(1.1) rotate(8deg); }
+}
+@media (max-width: 1150px) {
+  .timeline-decor { display: none; }
 }
 .events-timeline { position: relative; max-width: 920px; margin: 0 auto; padding: 0.5rem 0; }
 .timeline-art { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
@@ -485,7 +560,7 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 /* ------------------------------
    ABOUT SASA PAGE
 ------------------------------ */
-.about-hero { text-align: center; }
+.about-hero { text-align: center; padding: 6.5rem 0 7rem; }
 .about-hero .hero-content { padding-top: 1.5rem; }
 .about-hero p { max-width: 760px; margin: 0 auto; }
 .about-mission { background: var(--sky); }
@@ -525,7 +600,8 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
   .nav-links a, .nav-dropdown-trigger { color: var(--white); }
   .nav-links a::after, .nav-dropdown-trigger::after { background: var(--white); }
   .hero-text-column h1 { font-size: 3.8rem; }
-  .subpage-hero { padding: 4rem 0 4.5rem; }
+  .subpage-hero, .about-hero { padding: 4rem 0 4.5rem; }
+  .hero-kites { display: none; }
   .about-hero .hero-content { padding-top: 0; }
   .about-photo { min-height: 240px; }
   .about-value-grid { grid-template-columns: 1fr; }
@@ -557,6 +633,8 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 
 @media (prefers-reduced-motion: reduce) {
   .path-kite { display: none; }
+  .hero-kite { animation: none; opacity: 0; }
+  .timeline-motif { animation: none; opacity: 0.32; }
   .events-roadmap { animation: none; background-position: 50% 50%; }
   .font-flicker { animation: none; font-family: 'Playfair Display', serif; }
   body, .subpage-hero { animation: none; background-position: 50% 50%; }
