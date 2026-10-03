@@ -542,6 +542,17 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .event-card-content p { color: var(--gray-text); font-size: 0.92rem; }
 .events-join { padding: 4rem 1rem; background: var(--deep-blue); color: var(--warm-cream); text-align: center; }
 .events-join h2 { max-width: 650px; margin: 0.5rem auto 1.5rem; font-size: clamp(2.3rem, 5.5vw, 3.4rem); }
+.events-join .pulse-border {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--orange) 100%);
+  color: var(--dark-navy);
+  box-shadow: 0 0 0 0 rgba(255, 209, 102, 0.6);
+  animation: pulse 2.2s infinite;
+  border: 2px solid rgba(255,255,255,0.25);
+}
+.events-join .pulse-border:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 14px rgba(255, 209, 102, 0.12);
+}
 .path-kite { filter: drop-shadow(0 3px 4px rgba(61,33,24,0.22)); }
 .path-kite-lead { color: #E63A25; }
 .path-kite-small:nth-child(2) { color: #F28C16; }
