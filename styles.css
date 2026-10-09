@@ -464,7 +464,8 @@ h2 { font-family: 'Raleway', sans-serif; font-weight: 800; }
 .leader-grid { display: grid; grid-template-columns: repeat(3, minmax(170px, 1fr)); gap: 2rem 1.4rem; }
 .leader-card { text-align: center; color: var(--gray-text); background: transparent; border-radius: 18px; padding: 1rem 0.5rem; box-shadow: none; }
 .leader-name { color: var(--deep-blue); font: 600 1rem 'DM Sans', sans-serif; min-height: 1.6rem; }
-.leader-avatar { width: 142px; height: 142px; margin: 0.75rem auto 0.65rem; border-radius: 50%; color: var(--deep-blue); border-color: rgba(141,27,18,0.38); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); }
+.leader-avatar { width: 142px; height: 142px; margin: 0.75rem auto 0.65rem; border-radius: 50%; color: var(--deep-blue); border-color: rgba(141,27,18,0.38); background: repeating-linear-gradient(45deg, rgba(141,27,18,0.04), rgba(141,27,18,0.04) 10px, rgba(230,160,26,0.12) 10px, rgba(230,160,26,0.12) 20px); overflow: hidden; }
+.leader-avatar .photo-img { border-radius: 50%; box-shadow: none; }
 .leader-socials { display: flex; justify-content: center; gap: 0.55rem; margin: 0.4rem 0 0.6rem; }
 .social-icon { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; color: var(--white); transition: transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 10px rgba(61,33,24,0.18); }
 .social-icon:hover { transform: translateY(-2px) scale(1.06); }
